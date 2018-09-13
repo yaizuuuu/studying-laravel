@@ -1,0 +1,34 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context     : ./nginx
+    depends_on:
+      - php-fpm
+    container_name: laravel-nginx
+    hostname      : laravel-nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./opt:/opt:cached
+
+  php-fpm:
+    build:
+      context     : ./php-fpm
+    container_name: laravel-php-fpm
+    hostname      : laravel-php-fpm
+    volumes:
+      - ./opt:/opt:cached
+
+  mysql:
+    image                : mysql
+    container_name       : laravel-mysql
+    hostname             : laravel-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE     : testdb
+      MYSQL_USER         : testuser
+      MYSQL_PASSWORD     : password
+    ports:
+      - '33060:3306'
+
