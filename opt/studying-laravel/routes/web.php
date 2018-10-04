@@ -16,5 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/hello', function () {
-    dd('Hello!!!');
-});
+    $route = Route::current();
+    $name = Route::currentRouteName();
+    $action = Route::currentRouteAction();
+    dd($route, $name, $action);
+})->name('hello');
