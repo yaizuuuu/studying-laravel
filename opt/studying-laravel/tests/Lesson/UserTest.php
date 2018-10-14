@@ -6,7 +6,7 @@
  * Time: 20:39
  */
 
-namespace Tests\Unit\Lesson;
+namespace Tests\Lesson;
 
 
 use App\Eloquent\User;
@@ -16,6 +16,15 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+
+//    public function setUp()
+//    {
+//        dd(
+//            env('APP_ENV'),
+//            env('DB_HOST')
+//        );
+//        parent::setUp();
+//    }
 
     public function testUserAgeMutator()
     {

@@ -32,3 +32,14 @@ services:
     ports:
       - '33060:3306'
 
+  test-mysql:
+    image                : mysql
+    container_name       : laravel-test-mysql
+    hostname             : laravel-test-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE     : testdb
+      MYSQL_USER         : testuser
+      MYSQL_PASSWORD     : password
+    ports:
+    - '33061:3306'
