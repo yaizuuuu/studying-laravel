@@ -21,3 +21,20 @@ Route::get('/hello', function () {
     $action = Route::currentRouteAction();
     dd($route, $name, $action);
 })->name('hello');
+
+Route::get('/foo', function () {
+    File::put(__DIR__ . '/file.txt', 'Lorem ipsum');
+});
+
+Route::get('find_user', function () {
+    $find_user = \App\Eloquent\User::find(1);
+    $find_users = \App\Eloquent\User::all();
+
+    return View::make(
+        'welcome',
+        [
+            'find_user' => $find_user,
+            'find_users' => $find_users,
+        ]
+    );
+});

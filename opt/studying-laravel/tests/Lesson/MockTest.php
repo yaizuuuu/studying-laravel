@@ -13,12 +13,15 @@ use Mockery;
 
 class MockTest extends TestCase
 {
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        Mockery::close();
-    }
+    /**
+     * フレームワーク側で `Mockery::close`の処理を行っているため、不要
+     */
+//    public function tearDown()
+//    {
+//        parent::tearDown();
+//
+//        Mockery::close();
+//    }
 
     public function testItWorks()
     {
