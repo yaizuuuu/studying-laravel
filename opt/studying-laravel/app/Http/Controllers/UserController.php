@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Eloquent\User;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     protected $user;
 
-    public function __construct(User $user)
+    public function __construct(UserRepositoryInterface $user)
     {
         $this->user = $user;
     }

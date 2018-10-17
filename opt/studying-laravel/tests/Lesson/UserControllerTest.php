@@ -9,11 +9,9 @@
 namespace Tests\Lesson;
 
 
-use App\Eloquent\User;
-use Eloquent;
+use App\Repositories\User\UserRepositoryInterface;
 use Mockery;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
@@ -25,7 +23,7 @@ class UserControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user_mock = Mockery::mock(Eloquent::class, User::class);
+        $this->user_mock = Mockery::mock(UserRepositoryInterface::class);
         $this->request_mock = Mockery::mock(Request::class)->makePartial();
     }
 
@@ -36,7 +34,7 @@ class UserControllerTest extends TestCase
             ->once()
             ->andReturn('foo');
 
-        $this->app->instance(User::class, $this->user_mock);
+        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->get('user');
         $response->assertViewHas('users');
@@ -58,7 +56,7 @@ class UserControllerTest extends TestCase
             ->once()
             ->with($input);
 
-        $this->app->instance(User::class, $this->user_mock);
+        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->post('user');
 
@@ -76,7 +74,7 @@ class UserControllerTest extends TestCase
 
         $this->app->instance(Request::class, $this->request_mock);
 
-        $this->app->instance(User::class, $this->user_mock);
+        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->post('user');
 
@@ -100,7 +98,7 @@ class UserControllerTest extends TestCase
             ->once()
             ->with($input);
 
-        $this->app->instance(User::class, $this->user_mock);
+        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->post('user');
 
