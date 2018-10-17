@@ -30,7 +30,7 @@ Route::get('find_user', function () {
     $find_user = \App\Eloquent\User::find(1);
     $find_users = \App\Eloquent\User::all();
 
-    return View::make(
+    return view(
         'welcome',
         [
             'find_user' => $find_user,
@@ -38,3 +38,5 @@ Route::get('find_user', function () {
         ]
     );
 });
+
+Route::resource('user', 'UserController');
