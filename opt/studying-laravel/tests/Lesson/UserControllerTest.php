@@ -9,6 +9,7 @@
 namespace Tests\Lesson;
 
 
+use App\Eloquent\User;
 use App\Repositories\User\UserRepositoryInterface;
 use Mockery;
 use Illuminate\Http\Request;
@@ -16,17 +17,6 @@ use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
-    protected $user_mock;
-    protected $request_mock;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->user_mock = $this->mock(UserRepositoryInterface::class);
-        $this->request_mock =$this->mock(Request::class)->makePartial();
-    }
-
     private function mock(string $class)
     {
         $mock = Mockery::mock($class);
@@ -36,10 +26,18 @@ class UserControllerTest extends TestCase
         return $mock;
     }
 
+    private function requestMock($input)
+    {
+        $this->mock(Request::class)
+            ->makePartial()
+            ->shouldReceive('all')
+            ->once()
+            ->andReturn($input);
+    }
+
     public function testIndex()
     {
-        $this->user_mock
-            ->shouldReceive('all')
+        User::shouldReceive('all')
             ->once()
             ->andReturn('foo');
 
@@ -51,13 +49,9 @@ class UserControllerTest extends TestCase
     {
         $input = ['title' => 'My Title'];
 
-        $this->request_mock
-            ->shouldReceive('all')
-            ->once()
-            ->andReturn($input);
+        $this->requestMock($input);
 
-        $this->user_mock
-            ->shouldReceive('create')
+        User::shouldReceive('create')
             ->once()
             ->with($input);
 
@@ -70,10 +64,7 @@ class UserControllerTest extends TestCase
     {
         $input = ['title' => ''];
 
-        $this->request_mock
-            ->shouldReceive('all')
-            ->once()
-            ->andReturn($input);
+        $this->requestMock($input);
 
         $response = $this->post('user');
 
@@ -85,13 +76,9 @@ class UserControllerTest extends TestCase
     {
         $input = ['title' => 'My Title'];
 
-        $this->request_mock
-            ->shouldReceive('all')
-            ->once()
-            ->andReturn($input);
+        $this->requestMock($input);
 
-        $this->user_mock
-            ->shouldReceive('create')
+        User::shouldReceive('create')
             ->once()
             ->with($input);
 
