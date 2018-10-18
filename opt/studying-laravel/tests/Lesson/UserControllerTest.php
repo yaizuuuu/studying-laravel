@@ -23,8 +23,17 @@ class UserControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user_mock = Mockery::mock(UserRepositoryInterface::class);
-        $this->request_mock = Mockery::mock(Request::class)->makePartial();
+        $this->user_mock = $this->mock(UserRepositoryInterface::class);
+        $this->request_mock =$this->mock(Request::class)->makePartial();
+    }
+
+    private function mock(string $class)
+    {
+        $mock = Mockery::mock($class);
+
+        $this->app->instance($class, $mock);
+
+        return $mock;
     }
 
     public function testIndex()
@@ -33,8 +42,6 @@ class UserControllerTest extends TestCase
             ->shouldReceive('all')
             ->once()
             ->andReturn('foo');
-
-        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->get('user');
         $response->assertViewHas('users');
@@ -49,14 +56,10 @@ class UserControllerTest extends TestCase
             ->once()
             ->andReturn($input);
 
-        $this->app->instance(Request::class, $this->request_mock);
-
         $this->user_mock
             ->shouldReceive('create')
             ->once()
             ->with($input);
-
-        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->post('user');
 
@@ -71,10 +74,6 @@ class UserControllerTest extends TestCase
             ->shouldReceive('all')
             ->once()
             ->andReturn($input);
-
-        $this->app->instance(Request::class, $this->request_mock);
-
-        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->post('user');
 
@@ -91,14 +90,10 @@ class UserControllerTest extends TestCase
             ->once()
             ->andReturn($input);
 
-        $this->app->instance(Request::class, $this->request_mock);
-
         $this->user_mock
             ->shouldReceive('create')
             ->once()
             ->with($input);
-
-        $this->app->instance(UserRepositoryInterface::class, $this->user_mock);
 
         $response = $this->post('user');
 
