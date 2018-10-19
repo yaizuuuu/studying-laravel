@@ -13,7 +13,7 @@ RUN apt-get update \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
- && docker-php-ext-install -j$(nproc) gd iconv mcrypt pdo_mysql \
+ && docker-php-ext-install -j$(nproc) gd iconv mcrypt pdo_mysql zip \
  && pecl install xdebug-2.5.5 \
  && pecl install memcached \
  && echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini
