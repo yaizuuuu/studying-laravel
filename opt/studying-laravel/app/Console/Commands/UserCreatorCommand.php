@@ -11,7 +11,7 @@ class UserCreatorCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:createUser {user*} {--P|path}';
 
     /**
      * The console command description.
@@ -37,6 +37,7 @@ class UserCreatorCommand extends Command
      */
     public function handle()
     {
-        //
+        $arg = $this->argument('user');
+        $this->info(implode(',', $arg));
     }
 }
