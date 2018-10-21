@@ -10,6 +10,7 @@ namespace Tests\Lesson;
 
 use App\Eloquent\Author;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery\Mock;
 use Tests\Helper\ModelHelpers;
 use Tests\TestCase;
 

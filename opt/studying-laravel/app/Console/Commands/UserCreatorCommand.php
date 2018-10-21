@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\ModelGenerator;
 use Illuminate\Console\Command;
 
 class UserCreatorCommand extends Command
@@ -11,23 +12,28 @@ class UserCreatorCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:createUser {user*} {--P|path}';
+    protected $signature = 'command:generateModel {name} {-p|--path=app/Eloquent}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Generate a new model.';
+
+    protected $generator;
 
     /**
      * Create a new command instance.
      *
-     * @return void
+     * UserCreatorCommand constructor.
+     * @param ModelGenerator $model_generator
      */
-    public function __construct()
+    public function __construct(ModelGenerator $model_generator)
     {
         parent::__construct();
+
+        $this->generator = $model_generator;
     }
 
     /**
@@ -37,7 +43,19 @@ class UserCreatorCommand extends Command
      */
     public function handle()
     {
-        $arg = $this->argument('user');
-        $this->info(implode(',', $arg));
+        $path = $this->getPath();
+
+        if ($this->generator->make($path)) {
+            $this->info("Created {$path}");
+        } else {
+            $this->error("Could not create {$path}");
+        }
+
+
+    }
+
+    public function getPath()
+    {
+        return $this->option('path') . '/' . ucwords($this->argument('name')) . '.php';
     }
 }
